@@ -6,6 +6,10 @@ const employer_schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
   password: {
     type: String,
     reuired: true,

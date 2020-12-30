@@ -6,9 +6,9 @@ require('./models/employer')
 require('./models/employee')
 require('./models/timesheet')
 
-
 app.use(express.json())
-app.use(require('./routes/auth'))
+app.use(require('./routes/cAuth'))
+app.use(require('./routes/pAuth'))
 app.use(require('./routes/post'))
 
 

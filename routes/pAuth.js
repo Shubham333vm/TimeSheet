@@ -1,7 +1,7 @@
 const app = require("express")
 const router = app.Router();
 const mongoose = require("mongoose")
-const Employee = mongoose.model("Employee")
+const Employer = mongoose.model("Employer")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const keys = require("../keys")
@@ -11,7 +11,7 @@ router.get("/",(req,res,next)=>{
 next()
 })
 
-router.post("/signUp",(req,res)=>{
+router.post("/psignUp",(req,res)=>{
 
     console.log("we got invoked-->"+req.body)
     const{name,email,password} = req.body
@@ -25,7 +25,7 @@ router.post("/signUp",(req,res)=>{
     else{
         console.log("inside else")
 
-        Employee.findOne({email:email}).then((savedUser)=>{
+        Employer.findOne({email:email}).then((savedUser)=>{
             console.log("exist findOne")
 
             if(savedUser){
@@ -36,13 +36,13 @@ router.post("/signUp",(req,res)=>{
 
                 bcrypt.hash(password,12).then((hasedPassKey)=>{
                     console.log("exist else find")
-                    const employee = new Employee({
+                    const employer = new Employer({
                         name,
                         email,
                         password:hasedPassKey})
-                    console.log("employee created")
+                    console.log("employer created")
     
-                    employee.save().then((saved)=>{
+                    employer.save().then((saved)=>{
                         console.log("exist")
                         res.status(200).json("Employee successfully added")
                     }).catch((err)=>{
@@ -67,7 +67,7 @@ router.post("/signUp",(req,res)=>{
     
     })
 
-router.post("/signIn",(req,res)=>{
+router.post("/psignIn",(req,res)=>{
 
     const{email,password}=req.body
 
@@ -75,13 +75,13 @@ router.post("/signIn",(req,res)=>{
        return res.send("Please provide user email or password") 
     }
 
-    Employee.findOne({email:email}).then((employee)=>{
+    Employer.findOne({email:email}).then((employer)=>{
 
-        bcrypt.compare(password,employee.password).then(matched=>{
+        bcrypt.compare(password,employer.password).then(matched=>{
             if(matched){
 
-                const token = jwt.sign({_id:employee._id},keys.JWT_Secret);
-                res.send({token,employee})
+                const token = jwt.sign({_id:employer._id},keys.JWT_Secret);
+                res.send({token,employer})
  
             }
             else res.send("Incorrect email or password")

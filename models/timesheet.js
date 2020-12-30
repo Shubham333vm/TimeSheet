@@ -3,7 +3,7 @@ const {ObjectId} = mongoose.Schema.Types
 
 const timesheet_Schema = new mongoose.Schema({
   employee: {
-    type: ObjectId,
+    type: Object,
     ref: "Employee",
   },
   day_status: {
