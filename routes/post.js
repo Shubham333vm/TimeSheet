@@ -2,6 +2,9 @@ const app = require("express")
 const router = app.Router()
 const mongoose = require("mongoose")
 const emp_timeSheet = mongoose.model("Timesheet")
+const middleware = require("../middleWare/loginService")
+
+
 
 router.post("/fillSheet",(req,res)=>{
 
@@ -22,7 +25,7 @@ router.post("/fillSheet",(req,res)=>{
 
 })
 
-router.get("/workLogs", (req, res) => {
+router.get("/workLogs",middleware,(req, res) => {
     // Team.getPagination()
     emp_timeSheet.find({}, function (err, docs) {
       if (!err) {
